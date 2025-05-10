@@ -1,0 +1,24 @@
+# Node.js
+node_modules/
+
+# TypeScript compiled output
+build/
+
+# Cloned VibeSafe CLI reference (temporary)
+vibeSafe/
+
+# Markdown files
+*.md
+
+# Test assets (if not intended for commit)
+test-assets/
+
+# OS-specific
+.DS_Store
+
+# Log files
+*.log
+
+# NPM debug files
+npm-debug.log*
+*.nrwl.nx-cache 
