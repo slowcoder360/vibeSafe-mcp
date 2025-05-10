@@ -9,6 +9,7 @@ vibeSafe/
 
 # Markdown files
 *.md
+!README.md
 
 # Test assets (if not intended for commit)
 test-assets/
