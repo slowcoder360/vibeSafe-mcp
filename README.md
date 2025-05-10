@@ -1,85 +1,68 @@
-# 🛡️ VibeSafe MCP Server 🛡️
+# VibeSafe MCP Server
 
-This project implements an MCP (Model Context Protocol) server for the VibeSafe suite of security scanners.
-It empowers Large Language Model (LLM) agents and AI-driven IDEs (like Cursor) to programmatically invoke security checks, bringing security directly into your development workflow!
-This server is based on the original open-source VibeSafe project, which you can find at [https://github.com/slowcoder360/vibesafe](https://github.com/slowcoder360/vibesafe).
+Part of the **VibeSafe OSS Stack**, this MCP (Model Context Protocol) server allows AI agents and LLM-powered IDEs like **Cursor** to run real-time security scans on your codebase.
 
----
+Built using the official [Model Context Protocol SDK](https://modelcontextprotocol.io), this server exposes VibeSafe's security tools as callable functions LLMs can invoke — automatically or at the user's direction.
 
-## 🚀 Project Structure
+## ✨ Features
 
-Here's a map of the project:
+Each tool can be triggered by an LLM agent or run manually:
 
--   `src/`: 核心 The heart of the server!
-    -   `index.ts`: 🏁 Main server entry point.
-    -   `tools/`: 🛠️ MCP tool definitions (e.g., `secretScanTool.ts`).
-    -   `scanners/`: 🔬 Core scanning logic adapted from the VibeSafe CLI.
--   `test-client.ts`: 🧪 A simple Node.js client for testing the MCP server and its tools.
--   `test-assets/`: 🧪 Contains files used for testing scanners (e.g., `dummy-secrets.txt`).
--   `vibeSafe/`: 📚 A local clone of the original VibeSafe CLI, used as a reference for scanner logic. (This directory is in `.gitignore`).
--   `.gitignore`: 🙈 Specifies intentionally untracked files by Git.
--   `package.json`: 📦 Project metadata, dependencies, and scripts.
--   `tsconfig.json`: ⚙️ TypeScript compiler configuration.
--   `README.md`: 📖 You are here! (Currently in `.gitignore` due to `*.md` rule).
+- 🔐 `secret-scan` – Detects hardcoded secrets like AWS keys, JWTs, SSH keys, and .env leaks
+- 🛡️ `secure-install` – Prevents slopsquatting/typosquatting by analyzing npm packages before install
+- 📦 `vuln-scan` – Checks dependencies against the [OSV.dev](https://osv.dev) vulnerability database
+- ⚙️ `config-scan` – Detects insecure flags like `DEBUG=true` or permissive CORS in JSON/YAML configs
+- 🌐 `http-timeout-scan` – Warns on missing timeouts in axios, fetch, got, etc.
+- 📤 `upload-scan` – Validates file upload handlers for size/type checks (Multer, Formidable, etc.)
+- 🔎 `endpoint-scan` – Flags exposed routes like `/admin`, `/debug`, `/metrics`
+- 🚫 `rate-limit-check` – Heuristically checks for missing API rate limits
+- 🪵 `logging-scan` – Warns on improper or sensitive logging (e.g., full error stacks, credentials)
 
----
+## ⚙️ Install
 
-## 🛠️ Setup & Installation
-
-Get up and running in a few simple steps:
-
-1.  **Clone the Repository** (if you haven't already):
-    ```bash
-    git clone <repository-url>
-    cd vibeSafe-mcp
-    ```
-2.  **Install Dependencies**:
-    This project uses npm to manage dependencies.
-    ```bash
-    npm install
-    ```
-
----
-
-## 🏗️ Build
-
-Compile the TypeScript source code into JavaScript (output to `build/` directory):
 ```bash
-npm run build
+git clone https://github.com/slowcoder360/vibeSafe-mcp.git
+cd vibeSafe-mcp
+npm install
 ```
+## ▶️ Run Locally
+To run as an MCP server with standard I/O:
 
----
-
-## 🖥️ Running the Server
-
-To start the VibeSafe MCP server (it will listen for MCP messages on stdio):
 ```bash
 npm run start
 ```
-Alternatively, after a build, you can run:
-```bash
-node build/src/index.js
+If you're using Cursor, add the following to your .cursor/config.json:
+
+```json
+{
+  "mcpServers": {
+    "vibesafe": {
+      "command": "npm",
+      "args": ["run", "start"],
+      "cwd": "/absolute/path/to/vibeSafe-mcp"
+    }
+  }
+}
 ```
+## 🧠 AI IDE Support
+This server works with any IDE or client that supports Model Context Protocol, including:
 
----
+- Cursor
+- Claude Desktop (Anthropic)
+- Open-source LLM agents with MCP support
 
-## ✅ Testing
+## 📦 Part of the VibeSafe OSS Stack
+VibeSafe is an open-source devtool focused on AI-safe coding and automated security analysis. Other tools in the stack include:
 
-We have a simple test client to verify server and tool functionality:
+- vibesafe (npm CLI)
+- vibesafe-py (Python CLI)
+- VS Code extension (coming soon)
+- MCP server (this repo)
 
-1.  **Ensure the server is NOT already running** (the test client spawns its own instance).
-2.  **Run the Test Client**:
-    This command will first build the project, then execute the test client.
-    ```bash
-    npm run test:client
-    ```
-    The client (`test-client.ts`) will:
-    *   Spawn the MCP server.
-    *   Connect to it.
-    *   Call the `secret-scan` tool (currently configured to scan `test-assets/dummy-secrets.txt`).
-    *   Print the results.
-    *   Shut down the server.
+## License
+MIT License
 
----
+## Contributing
+Open an issue or pull request if you have a new tool idea, fix, or feedback!
 
-**Note on `.gitignore`**: Currently, all `*.md` files (including this `README.md`) and the `test-assets/` directory are excluded from Git tracking. You might want to adjust these rules in the `.gitignore` file, for example, to commit this README and your test assets. 
+"Ship fast. Stay safe." – The VibeSafe OSS Stack 
