@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { scanPathForSecrets, SecretFinding } from '../scanners/secretScanner';
+import { scanPathForSecrets, SecretFinding } from '../scanners/secretScanner.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'; // Needed for McpServer.Tool type if used explicitly
 
 // Define the input schema for the secret-scan tool

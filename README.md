@@ -6,17 +6,17 @@ Built using the official [Model Context Protocol SDK](https://modelcontextprotoc
 
 ## ✨ Features
 
-Each tool can be triggered by an LLM agent or run manually:
+The following tools are available or planned:
 
 - 🔐 `secret-scan` – Detects hardcoded secrets like AWS keys, JWTs, SSH keys, and .env leaks
 - 🛡️ `secure-install` – Prevents slopsquatting/typosquatting by analyzing npm packages before install
-- 📦 `vuln-scan` – Checks dependencies against the [OSV.dev](https://osv.dev) vulnerability database
-- ⚙️ `config-scan` – Detects insecure flags like `DEBUG=true` or permissive CORS in JSON/YAML configs
-- 🌐 `http-timeout-scan` – Warns on missing timeouts in axios, fetch, got, etc.
-- 📤 `upload-scan` – Validates file upload handlers for size/type checks (Multer, Formidable, etc.)
-- 🔎 `endpoint-scan` – Flags exposed routes like `/admin`, `/debug`, `/metrics`
-- 🚫 `rate-limit-check` – Heuristically checks for missing API rate limits
-- 🪵 `logging-scan` – Warns on improper or sensitive logging (e.g., full error stacks, credentials)
+- 📦 `vuln-scan` – Checks dependencies against the [OSV.dev](https://osv.dev) vulnerability database (Coming Soon)
+- ⚙️ `config-scan` – Detects insecure flags like `DEBUG=true` or permissive CORS in JSON/YAML configs (Coming Soon)
+- 🌐 `http-timeout-scan` – Warns on missing timeouts in axios, fetch, got, etc. (Coming Soon)
+- 📤 `upload-scan` – Validates file upload handlers for size/type checks (Multer, Formidable, etc.) (Coming Soon)
+- 🔎 `endpoint-scan` – Flags exposed routes like `/admin`, `/debug`, `/metrics` (Coming Soon)
+- 🚫 `rate-limit-check` – Heuristically checks for missing API rate limits (Coming Soon)
+- 🪵 `logging-scan` – Warns on improper or sensitive logging (e.g., full error stacks, credentials) (Coming Soon)
 
 ## ⚙️ Install
 

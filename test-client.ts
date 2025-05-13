@@ -29,15 +29,45 @@ async function runTest() {
       console.log(`Server process PID: ${serverProcess?.pid}`);
     }
 
-    const toolName = "secret-scan";
-    const params = { path: "./test-assets/dummy-secrets.txt" };
+    // --- Test secret-scan --- (Commented out for now)
+    // const toolNameSecretScan = "secret-scan";
+    // const paramsSecretScan = { path: "./test-assets/dummy-secrets.txt" };
+    // console.log(`Calling tool: ${toolNameSecretScan} with arguments:`, paramsSecretScan);
+    // const resultSecretScan = await client.callTool({
+    //   name: toolNameSecretScan,
+    //   arguments: paramsSecretScan,
+    // });
+    // console.log("Secret Scan Tool call result:", JSON.stringify(resultSecretScan, null, 2));
 
-    console.log(`Calling tool: ${toolName} with arguments:`, params);
-    const result = await client.callTool({
-      name: toolName,
-      arguments: params,
+    // --- Test secure-install: Good Package (axios) ---
+    const toolNameSecureInstall = "secure-install";
+    console.log(`
+--- Test 1: Calling tool: ${toolNameSecureInstall} for a GOOD package (axios) ---`);
+    let resultSecureInstall = await client.callTool({
+      name: toolNameSecureInstall,
+      arguments: { packageName: "axios" },
     });
-    console.log("Tool call result:", JSON.stringify(result, null, 2));
+    console.log("Secure Install (axios) result:", JSON.stringify(resultSecureInstall, null, 2));
+
+    // --- Test secure-install: Dummy Package (vibesafe-dummy-test) - Check Only ---
+    console.log(`
+--- Test 2: Calling tool: ${toolNameSecureInstall} for a DUMMY package (vibesafe-dummy-test) - Check Only ---`);
+    resultSecureInstall = await client.callTool({
+      name: toolNameSecureInstall,
+      arguments: { packageName: "vibesafe-dummy-test" }, // yes: false or undefined is implicit
+    });
+    console.log("Secure Install (vibesafe-dummy-test, check only) result:", JSON.stringify(resultSecureInstall, null, 2));
+
+    // --- Test secure-install: Dummy Package (vibesafe-dummy-test) - Confirm Install ---
+    console.log(`
+--- Test 3: Calling tool: ${toolNameSecureInstall} for a DUMMY package (vibesafe-dummy-test) - Confirm Install ---`);
+    resultSecureInstall = await client.callTool({
+      name: toolNameSecureInstall,
+      arguments: { packageName: "vibesafe-dummy-test", yes: true },
+    });
+    console.log("Secure Install (vibesafe-dummy-test, confirm install) result:", JSON.stringify(resultSecureInstall, null, 2));
+
+    // --- Add more tool tests here as we develop them --- 
 
   } catch (error) {
     console.error("MCP Client Error:", error);

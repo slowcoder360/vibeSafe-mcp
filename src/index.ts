@@ -1,7 +1,8 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { secretScanToolSchema, secretScanToolHandler } from "./tools/secretScanTool";
+import { secretScanToolSchema, secretScanToolHandler } from "./tools/secretScanTool.js";
+import { secureInstallToolSchema, secureInstallToolHandler } from "./tools/secureInstallTool.js";
 
 // MCP Protocol Version: This server aims to be compatible with a version aligning with @modelcontextprotocol/sdk usage,
 // typically reflecting recent standards like "2025-03-26" or as implied by the SDK version itself.
@@ -20,6 +21,13 @@ async function main() {
     "Scans a given file or directory path for secrets (API keys, high entropy strings, etc.).",
     secretScanToolSchema.shape,
     secretScanToolHandler
+  );
+
+  server.tool(
+    'secure-install',
+    "Securely installs an npm package after running security checks.",
+    secureInstallToolSchema.shape,
+    secureInstallToolHandler
   );
 
   const transport = new StdioServerTransport();

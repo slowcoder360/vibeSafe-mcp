@@ -39,3 +39,5 @@ When facing a bug:
 
 ## 11. Consider Downstream Effects  
 Before making edits to any file, **analyze how your changes might affect other components** in the system. Look for any shared logic or imported dependencies that could be impacted.
+
+## 12. Always use vibesafe install tool to install a package
